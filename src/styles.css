@@ -1,0 +1,49 @@
+/* styles.css */
+body {
+  background-color: lightblue;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game {
+  --gb-padding: 30px;
+  position: relative;
+}
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(10, 75px);
+  grid-template-rows: repeat(10, 75px);
+  border: 1px solid black;
+  width: fit-content;
+  background-image: url("./images/dark_water.jpg");
+  padding: var(--gb-padding);
+}
+.board-square {
+  border-bottom: 1px dashed black;
+  border-right: 1px dashed black;
+}
+.gameboard > .board-square:nth-last-child(-n + 10) {
+  border-bottom: none;
+}
+.gameboard > .board-square:nth-child(10n) {
+  border-right: none;
+}
+.board-square:hover {
+  /* background: rgb(32, 132, 145, 0.3);
+  border-bottom: solid black 1px;
+  border-right: solid black 1px; */
+  cursor: crosshair;
+}
+.ship {
+  position: absolute;
+  /* transform: rotate(90deg); */
+}
+.ship > img {
+  position: absolute;
+}
+#largeship1 {
+  /*  */
+  top: calc(var(--gb-padding) + 75px);
+  left: calc(var(--gb-padding) - 24px + 75px);
+}
