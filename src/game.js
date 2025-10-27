@@ -1,4 +1,4 @@
-const Direction = {
+export const Direction = {
   NORTH: "NORTH",
   WEST: "WEST",
   SOUTH: "SOUTH",
@@ -9,9 +9,13 @@ export class Ship {
   length;
   numberOfHits = 0;
   sunk = false;
+  type;
+  direction;
 
-  constructor(length) {
+  constructor(length, type, direction) {
     this.length = length;
+    this.type = type;
+    this.direction = direction;
   }
 
   hit() {
@@ -27,38 +31,38 @@ export class Ship {
 export class Gameboard {
   ships = [];
   board = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
   ];
   missed = [];
 
-  _getShipPlacement(length, direction, x, y) {
+  _getShipPlacement(ship, x, y) {
     const shipPlacement = [{ x, y }];
-    for (let i = 1; i < length; i++) {
-      if (direction === Direction.NORTH) {
+    for (let i = 1; i < ship.length; i++) {
+      if (ship.direction === Direction.NORTH) {
         shipPlacement[i] = {
           x: shipPlacement[i - 1].x,
           y: shipPlacement[i - 1].y + 1,
         };
-      } else if (direction === Direction.EAST) {
+      } else if (ship.direction === Direction.EAST) {
         shipPlacement[i] = {
           x: shipPlacement[i - 1].x - 1,
           y: shipPlacement[i - 1].y,
         };
-      } else if (direction === Direction.SOUTH) {
+      } else if (ship.direction === Direction.SOUTH) {
         shipPlacement[i] = {
           x: shipPlacement[i - 1].x,
           y: shipPlacement[i - 1].y - 1,
         };
-      } else if (direction === Direction.WEST) {
+      } else if (ship.direction === Direction.WEST) {
         shipPlacement[i] = {
           x: shipPlacement[i - 1].x + 1,
           y: shipPlacement[i - 1].y,
@@ -72,13 +76,13 @@ export class Gameboard {
     for (let coor of shipPlacement) {
       if (coor.x < 0 || coor.x > 9 || coor.y < 0 || coor.y > 9)
         throw new Error("Outside gameboard");
-      if (this.board[coor.y][coor.x] !== 0)
+      if (this.board[coor.y][coor.x] !== null)
         throw new Error(`Collision with ${coor.x} ${coor.y}`);
     }
   }
-  placeShip(shipLength, direction, x, y) {
+  placeShip(ship, x, y) {
     // Can ship be places?
-    const shipPlacement = this._getShipPlacement(shipLength, direction, x, y);
+    const shipPlacement = this._getShipPlacement(ship, x, y);
     try {
       this._canShipBePlaced(shipPlacement);
     } catch (err) {
@@ -86,20 +90,20 @@ export class Gameboard {
     }
 
     // Place ship
-    this.ships.push(new Ship(shipLength));
+    this.ships.push(ship);
     for (let coor of shipPlacement) {
-      this.board[coor.y][coor.x] = this.ships.length;
+      this.board[coor.y][coor.x] = ship;
     }
 
     return true;
   }
 
   receiveAttack(x, y) {
-    const boardValue = this.board[y][x];
-    if (boardValue === 0) {
+    const ship = this.board[y][x];
+    if (ship === null) {
       this.missed.push({ x, y });
     } else {
-      this.ships[boardValue - 1].hit();
+      ship.hit();
     }
   }
   allShipsSunken() {
