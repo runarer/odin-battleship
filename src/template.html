@@ -6,46 +6,12 @@
   </head>
   <body>
     <div class="game">
-      <div class="ship largeship" id="largeship1">
-        <img
-          src="./images/largeship5points.png"
-          alt="Battleship"
-          style="visibility: visible"
-        />
-        <img
-          src="./images/largeship4points.png"
-          alt="Battleship"
-          style="visibility: hidden"
-        />
-        <img
-          src="./images/largeship3points.png"
-          alt="Battleship"
-          style="visibility: hidden"
-        />
-        <img
-          src="./images/largeship2points.png"
-          alt="Battleship"
-          style="visibility: hidden"
-        />
-        <img
-          src="./images/largeship1points.png"
-          alt="Battleship"
-          style="visibility: hidden"
-        />
-        <img
-          src="./images/largeship0points.png"
-          alt="Battleship"
-          style="visibility: hidden"
-        />
-      </div>
-
       <div class="gameboard" id="gameboard"></div>
     </div>
 
     <script>
       /* Draw gameboards */
       const gameboards = document.querySelectorAll(".gameboard");
-      console.log(gameboards);
       gameboards.forEach((gameboard) => {
         for (let i = 0; i < 10; i++)
           for (let j = 0; j < 10; j++) {

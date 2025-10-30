@@ -7,6 +7,14 @@ test("Sink a ship with length 2", () => {
   expect(ship.hit().isSunk()).toBe(true);
 });
 
+test("Place a ship", () => {
+  const gameboard = new Gameboard();
+  const ship = new Ship(5, "Battleship", Direction.SOUTH);
+  gameboard.placeShip(ship, 1, 6);
+  expect(ship.x).toBe(1);
+  expect(ship.y).toBe(6);
+});
+
 test("Place a ship outside", () => {
   const gameboard = new Gameboard();
   const ship4 = new Ship(4, "Frigate", Direction.EAST);
@@ -73,3 +81,11 @@ test("All ships sunken", () => {
   gameboard.receiveAttack(2, 0);
   expect(gameboard.allShipsSunken()).toBe(true);
 });
+
+// test("Place all ships", () => {
+//   const gameboard = new Gameboard();
+//   gameboard.ships = [new Ship(2,"Gunboat",Direction.NORTH),new Ship(3,"Cruiser",Direction.SOUTH)];
+
+//   gameboard.placeAllShips();
+//   expect(gameboard.ships)
+// });

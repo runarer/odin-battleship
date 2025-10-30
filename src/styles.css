@@ -42,8 +42,8 @@ body {
 .ship > img {
   position: absolute;
 }
-#largeship1 {
-  /*  */
+/* #largeship1 {
+
   top: calc(var(--gb-padding) + 75px);
   left: calc(var(--gb-padding) - 24px + 75px);
-}
+} */

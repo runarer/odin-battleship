@@ -5,12 +5,23 @@ export const Direction = {
   EAST: "EAST",
 };
 
+export class Player {
+  type;
+  gameboard;
+  constructor(type = "computer") {
+    this.type = type;
+    this.gameboard = new Gameboard();
+  }
+}
+
 export class Ship {
   length;
   numberOfHits = 0;
   sunk = false;
   type;
   direction;
+  x;
+  y;
 
   constructor(length, type, direction) {
     this.length = length;
@@ -91,6 +102,8 @@ export class Gameboard {
 
     // Place ship
     this.ships.push(ship);
+    ship.x = x;
+    ship.y = y;
     for (let coor of shipPlacement) {
       this.board[coor.y][coor.x] = ship;
     }
@@ -109,14 +122,30 @@ export class Gameboard {
   allShipsSunken() {
     return this.ships.every((ship) => ship.isSunk());
   }
-}
 
-export class Player {
-  type;
-  gameboard;
+  placeAllShips() {
+    const collitionError = /^Collision/;
 
-  constructor(type) {
-    this.type = type;
-    this.gameboard = new Gameboard();
+    for (let ship of ships) {
+      while (true)
+        try {
+          const posision = this._getRandomPos(ship);
+          this.placeShip(ship, ...posision);
+          break;
+        } catch (err) {
+          if (collitionError.test(err.message)) continue;
+          else throw err;
+        }
+    }
   }
 }
+
+// export class Player {
+//   type;
+//   gameboard;
+
+//   constructor(type) {
+//     this.type = type;
+//     this.gameboard = new Gameboard();
+//   }
+// }
