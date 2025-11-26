@@ -89,29 +89,120 @@ function _createAndTransformShipDiv(ship) {
 
 export function drawShipsBoard() {
   const gameDiv = document.querySelector(".gameboard");
+  const shipsDiv = document.createElement("div");
   human.gameboard.ships.forEach((ship) => {
-    gameDiv.appendChild(_createAndTransformShipDiv(ship));
+    // gameDiv.appendChild(_createAndTransformShipDiv(ship));
+    shipsDiv.appendChild(_createAndTransformShipDiv(ship));
   });
+  gameDiv.appendChild(shipsDiv);
 }
 
+const addButtons = () => {
+  const startButton = document.createElement("button");
+  startButton.type = "button";
+  startButton.id = "start";
+  startButton.textContent = "Start";
+  startButton.addEventListener("click", switchToGame);
+
+  const randomizeButton = document.createElement("button");
+  randomizeButton.type = "button";
+  randomizeButton.id = "randomize";
+  randomizeButton.textContent = "Randomize";
+  randomizeButton.addEventListener("click", randomizeShipPlacements);
+
+  const buttons = document.createElement("div");
+  buttons.classList.add("buttons");
+  console.log(buttons);
+  buttons.appendChild(randomizeButton);
+  buttons.appendChild(startButton);
+
+  return buttons;
+};
+
 export function drawStartView() {
+  const gameStartView = document.querySelector(".game");
+  gameStartView.replaceChildren();
+
   // Draw board
+  const gameboard = drawGameBoard();
+  gameStartView.appendChild(gameboard);
+
   // Place buttons
-  // Place ships
-  // Add listeners to buttons
+  const buttons = addButtons();
+  gameStartView.appendChild(buttons);
+
+  // Place and draw ships
+  initialPlacementOfShips();
+  drawShipsBoard();
 }
 
 /* Switches to game view */
-function switchToGame() {}
+function switchToGame() {
+  const game = document.querySelector(".game");
+  game.replaceChildren();
+
+  // const gameboard =
+}
 
 function randomizeShipPlacements() {
   // Remove ships
   // Try to place ships until all are legally placed
+  console.log("Not implemented yet");
 }
 
+/* Is there a way to do the placement with css?
+   Placed based on class? */
 export function drawShipsLeft() {
   const gameDiv = document.querySelector(".yourShips");
+
+  const mediumShips = [
+    "1/3/3/3",
+    "1/4/3/4",
+    "4/3/6/3",
+    "4/4/6/4",
+    "7/3/9/3",
+    "7/4/9/4",
+  ];
+  let medium = 0;
+
+  const smallShips = [
+    "6/1/7/1",
+    "6/2/7/2",
+    "8/1/9/1",
+    "8/2/9/2",
+    "10/1/11/1",
+    "10/2/11/2",
+    "10/3/11/3",
+    "10/4/11/4",
+  ];
+  let small = 0;
+
   human.gameboard.ships.forEach((ship) => {
-    gameDiv.appendChild(_createShipDiv(ship));
+    const shipDiv = _createShipDiv(ship);
+
+    // Place them correctly in the grid
+    if (ship.length === 5) {
+      shipDiv.style.gridArea = "1/1/5/1";
+    } else if (ship.length === 3) {
+      shipDiv.style.gridArea = mediumShips[medium++];
+    } else {
+      shipDiv.style.gridArea = smallShips[small++];
+    }
+
+    gameDiv.appendChild(shipDiv);
   });
 }
+
+const drawGameBoard = () => {
+  const gameboard = document.createElement("div");
+  gameboard.classList.add("gameboard");
+
+  for (let i = 0; i < 10; i++)
+    for (let j = 0; j < 10; j++) {
+      const boardSquare = document.createElement("div");
+      boardSquare.classList.add("board-square");
+      // boardSquare.id = `${j}${i}`;
+      gameboard.appendChild(boardSquare);
+    }
+  return gameboard;
+};

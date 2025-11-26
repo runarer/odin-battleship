@@ -6,26 +6,9 @@
   </head>
   <body>
     <div class="game">
-      <div class="yourShips"></div>
-      <div class="gameboard" id="gameboard"></div>
-      <div class="buttons">
-        <!-- <button type="button" id="randomize">Randomize</button> -->
-        <!-- <button type="button" id="start">Start</button> -->
-      </div>
+      <!-- <div class="yourShips"></div> -->
+      <!-- <div class="gameboard" id="gameboard"></div> -->
+      <!-- <div class="buttons"></div> -->
     </div>
-
-    <script>
-      /* Draw gameboards */
-      const gameboards = document.querySelectorAll(".gameboard");
-      gameboards.forEach((gameboard) => {
-        for (let i = 0; i < 10; i++)
-          for (let j = 0; j < 10; j++) {
-            const boardSquare = document.createElement("div");
-            boardSquare.classList.add("board-square");
-            boardSquare.id = `${gameboard.id}-${j}${i}`;
-            gameboard.appendChild(boardSquare);
-          }
-      });
-    </script>
   </body>
 </html>

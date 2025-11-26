@@ -6,8 +6,7 @@ import {
   initialPlacementOfShips,
   drawShipsBoard,
   drawShipsLeft,
+  drawStartView,
 } from "./view.js";
 
-initialPlacementOfShips();
-drawShipsBoard();
-drawShipsLeft();
+drawStartView();
