@@ -8,6 +8,7 @@ body {
 }
 .game {
   --gb-padding: 30px;
+  --block-size: 75px;
   position: relative;
 }
 .gameboard {
@@ -42,8 +43,25 @@ body {
 .ship > img {
   position: absolute;
 }
-/* #largeship1 {
 
-  top: calc(var(--gb-padding) + 75px);
-  left: calc(var(--gb-padding) - 24px + 75px);
-} */
+.ship {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+div.smallship {
+  width: calc(var(--block-size));
+  height: calc(2 * var(--block-size));
+}
+
+div.mediumship {
+  width: calc(var(--block-size));
+  height: calc(3 * var(--block-size));
+}
+
+div.largeship {
+  width: calc(2 * var(--block-size));
+  height: calc(5 * var(--block-size));
+}

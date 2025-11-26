@@ -1,24 +1,12 @@
 import { Ship, Player, Gameboard, Direction } from "./game";
-
-import battleship from "./images/largeship5pointsResize.png";
-import cruiser from "./images/mediumgreen3pointsResize.png";
-import destroyer from "./images/mediumred3pointsResize.png";
-import gunboat from "./images/smallgreen2pointsResize.png";
-import sweeper from "./images/smallred2pointsResize.png";
-
-let images = new Map();
-images.set("Battleship", battleship);
-images.set("Cruiser", cruiser);
-images.set("Destroyer", destroyer);
-images.set("Gunboat", gunboat);
-images.set("Sweeper", sweeper);
+import images from "./images";
 
 export const human = new Player("human");
 export const computer = new Player();
 
 export function initialPlacementOfShips() {
   try {
-    human.gameboard.placeShip(new Ship(5, "Battleship", Direction.WEST), 5, 3);
+    human.gameboard.placeShip(new Ship(5, "Battleship", Direction.NORTH), 5, 3);
 
     human.gameboard.placeShip(new Ship(3, "Destroyer", Direction.NORTH), 1, 3);
     human.gameboard.placeShip(new Ship(3, "Destroyer", Direction.SOUTH), 1, 9);
@@ -43,38 +31,73 @@ export function initialPlacementOfShips() {
 }
 
 function _setTransformation(shipDiv, ship) {
-  const image = shipDiv.querySelector("img");
   const padding = 30;
   let degree = 0; //Direction.NORTH
 
   let top = padding;
   let left = padding;
 
-  const imgWidth = image.naturalWidth;
-
   if (ship.direction === Direction.NORTH) {
-    left -= (imgWidth % 75) / 2;
   } else if (ship.direction === Direction.EAST) {
-    degree = 90;
     left += 75;
-    top -= (image.naturalWidth % 75) / 2;
+    degree = 90;
   } else if (ship.direction === Direction.SOUTH) {
     degree = 180;
-    top += 75;
     left += 75;
-    left += (imgWidth % 75) / 2;
+    top += 75;
   } else if (ship.direction === Direction.WEST) {
     degree = 270;
-    top += 75 + (image.naturalWidth % 75) / 2;
+    top += 75;
+    if (ship.length > 3) {
+      top += 75;
+    }
   }
   shipDiv.style.transform = `rotate(${degree}deg)`;
+  shipDiv.style.transformOrigin = "top left";
   shipDiv.style.top = top + ship.y * 75 + "px";
   shipDiv.style.left = left + ship.x * 75 + "px";
 }
 
+// function _setTransformation(shipDiv, ship) {
+//   const image = shipDiv.querySelector(".ship");
+//   const padding = 30;
+//   let degree = 0; //Direction.NORTH
+
+//   let top = padding;
+//   let left = padding;
+
+//   const imgWidth = image.naturalWidth;
+
+//   if (ship.direction === Direction.NORTH) {
+//     left -= (imgWidth % 75) / 2;
+//   } else if (ship.direction === Direction.EAST) {
+//     degree = 90;
+//     left += 75;
+//     top -= (image.naturalWidth % 75) / 2;
+//   } else if (ship.direction === Direction.SOUTH) {
+//     degree = 180;
+//     top += 75;
+//     left += 75;
+//     left += (imgWidth % 75) / 2;
+//   } else if (ship.direction === Direction.WEST) {
+//     degree = 270;
+//     top += 75 + (image.naturalWidth % 75) / 2;
+//   }
+//   shipDiv.style.transform = `rotate(${degree}deg)`;
+//   shipDiv.style.top = top + ship.y * 75 + "px";
+//   shipDiv.style.left = left + ship.x * 75 + "px";
+// }
+
 function _createShipDiv(ship) {
   const shipDiv = document.createElement("div");
   shipDiv.classList.add("ship");
+  if (ship.length == 5) {
+    shipDiv.classList.add("largeship");
+  } else if (ship.length == 3) {
+    shipDiv.classList.add("mediumship");
+  } else {
+    shipDiv.classList.add("smallship");
+  }
 
   const shipImg = document.createElement("img");
   shipImg.src = images.get(ship.type);
