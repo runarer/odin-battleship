@@ -57,6 +57,7 @@ export class Gameboard {
 
   _getShipPlacement(ship, x, y) {
     const shipPlacement = [{ x, y }];
+
     for (let i = 1; i < ship.length; i++) {
       if (ship.direction === Direction.NORTH) {
         shipPlacement[i] = {
@@ -80,6 +81,33 @@ export class Gameboard {
         };
       }
     }
+
+    if (ship.length == 5) {
+      for (let i = 0; i < ship.length; i++) {
+        if (ship.direction === Direction.NORTH) {
+          shipPlacement[i + 5] = {
+            x: shipPlacement[i].x + 1,
+            y: shipPlacement[i].y,
+          };
+        } else if (ship.direction === Direction.EAST) {
+          shipPlacement[i + 5] = {
+            x: shipPlacement[i].x,
+            y: shipPlacement[i].y + 1,
+          };
+        } else if (ship.direction === Direction.SOUTH) {
+          shipPlacement[i + 5] = {
+            x: shipPlacement[i].x - 1,
+            y: shipPlacement[i].y,
+          };
+        } else if (ship.direction === Direction.WEST) {
+          shipPlacement[i + 5] = {
+            x: shipPlacement[i].x,
+            y: shipPlacement[i].y - 1,
+          };
+        }
+      }
+    }
+
     return shipPlacement;
   }
 
@@ -94,6 +122,7 @@ export class Gameboard {
   placeShip(ship, x, y) {
     // Can ship be places?
     const shipPlacement = this._getShipPlacement(ship, x, y);
+    console.log(shipPlacement);
     try {
       this._canShipBePlaced(shipPlacement);
     } catch (err) {
@@ -139,13 +168,3 @@ export class Gameboard {
     }
   }
 }
-
-// export class Player {
-//   type;
-//   gameboard;
-
-//   constructor(type) {
-//     this.type = type;
-//     this.gameboard = new Gameboard();
-//   }
-// }
