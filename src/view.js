@@ -88,13 +88,11 @@ function _createAndTransformShipDiv(ship) {
 }
 
 export function drawShipsBoard() {
-  const gameDiv = document.querySelector(".gameboard");
   const shipsDiv = document.createElement("div");
   human.gameboard.ships.forEach((ship) => {
-    // gameDiv.appendChild(_createAndTransformShipDiv(ship));
     shipsDiv.appendChild(_createAndTransformShipDiv(ship));
   });
-  gameDiv.appendChild(shipsDiv);
+  return shipsDiv;
 }
 
 const addButtons = () => {
@@ -133,7 +131,8 @@ export function drawStartView() {
 
   // Place and draw ships
   initialPlacementOfShips();
-  drawShipsBoard();
+  const shipsDiv = drawShipsBoard();
+  gameboard.appendChild(shipsDiv);
 }
 
 /* Switches to game view */
@@ -141,7 +140,21 @@ function switchToGame() {
   const game = document.querySelector(".game");
   game.replaceChildren();
 
-  // const gameboard =
+  const yourShips = drawShipsLeft();
+  game.appendChild(yourShips);
+
+  const gameboard = drawGameBoard();
+  addEventListenersToBoard(gameboard);
+  game.appendChild(gameboard);
+}
+
+function addEventListenersToBoard(gameboard) {
+  for (let i = 0; i < 10; i++)
+    for (let j = 0; j < 10; j++) {
+      gameboard.children[j + i * 10].addEventListener("click", () => {
+        console.log(i, j);
+      });
+    }
 }
 
 function randomizeShipPlacements() {
@@ -153,7 +166,8 @@ function randomizeShipPlacements() {
 /* Is there a way to do the placement with css?
    Placed based on class? */
 export function drawShipsLeft() {
-  const gameDiv = document.querySelector(".yourShips");
+  const gameDiv = document.createElement("div");
+  gameDiv.classList.add("yourShips");
 
   const mediumShips = [
     "1/3/3/3",
@@ -191,6 +205,7 @@ export function drawShipsLeft() {
 
     gameDiv.appendChild(shipDiv);
   });
+  return gameDiv;
 }
 
 const drawGameBoard = () => {
@@ -201,7 +216,6 @@ const drawGameBoard = () => {
     for (let j = 0; j < 10; j++) {
       const boardSquare = document.createElement("div");
       boardSquare.classList.add("board-square");
-      // boardSquare.id = `${j}${i}`;
       gameboard.appendChild(boardSquare);
     }
   return gameboard;
