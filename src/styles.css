@@ -10,6 +10,28 @@ body {
   --gb-padding: 30px;
   --block-size: 75px;
   position: relative;
+  display: flex;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+}
+.buttons > button {
+  font-weight: 600;
+  font-size: larger;
+  margin: 10px;
+  height: 3rem;
+  width: 11ch;
+  border-radius: 10px;
+  border: 3px solid #3499e6;
+  background-color: #9dd2fa;
+  color: #2274bb;
+}
+.buttons > button:hover {
+  background-color: #7abaf1;
 }
 .gameboard {
   display: grid;
