@@ -52,41 +52,12 @@ function _setTransformation(shipDiv, ship) {
       top += 75;
     }
   }
+  shipDiv.style.position = "absolute";
   shipDiv.style.transform = `rotate(${degree}deg)`;
   shipDiv.style.transformOrigin = "top left";
   shipDiv.style.top = top + ship.y * 75 + "px";
   shipDiv.style.left = left + ship.x * 75 + "px";
 }
-
-// function _setTransformation(shipDiv, ship) {
-//   const image = shipDiv.querySelector(".ship");
-//   const padding = 30;
-//   let degree = 0; //Direction.NORTH
-
-//   let top = padding;
-//   let left = padding;
-
-//   const imgWidth = image.naturalWidth;
-
-//   if (ship.direction === Direction.NORTH) {
-//     left -= (imgWidth % 75) / 2;
-//   } else if (ship.direction === Direction.EAST) {
-//     degree = 90;
-//     left += 75;
-//     top -= (image.naturalWidth % 75) / 2;
-//   } else if (ship.direction === Direction.SOUTH) {
-//     degree = 180;
-//     top += 75;
-//     left += 75;
-//     left += (imgWidth % 75) / 2;
-//   } else if (ship.direction === Direction.WEST) {
-//     degree = 270;
-//     top += 75 + (image.naturalWidth % 75) / 2;
-//   }
-//   shipDiv.style.transform = `rotate(${degree}deg)`;
-//   shipDiv.style.top = top + ship.y * 75 + "px";
-//   shipDiv.style.left = left + ship.x * 75 + "px";
-// }
 
 function _createShipDiv(ship) {
   const shipDiv = document.createElement("div");
@@ -103,13 +74,43 @@ function _createShipDiv(ship) {
   shipImg.src = images.get(ship.type);
   shipDiv.appendChild(shipImg);
 
+  // _setTransformation(shipDiv, ship);
+
+  return shipDiv;
+}
+
+function _createAndTransformShipDiv(ship) {
+  const shipDiv = _createShipDiv(ship);
+
   _setTransformation(shipDiv, ship);
 
   return shipDiv;
 }
 
-export function drawShips() {
-  const gameDiv = document.querySelector(".game");
+export function drawShipsBoard() {
+  const gameDiv = document.querySelector(".gameboard");
+  human.gameboard.ships.forEach((ship) => {
+    gameDiv.appendChild(_createAndTransformShipDiv(ship));
+  });
+}
+
+export function drawStartView() {
+  // Draw board
+  // Place buttons
+  // Place ships
+  // Add listeners to buttons
+}
+
+/* Switches to game view */
+function switchToGame() {}
+
+function randomizeShipPlacements() {
+  // Remove ships
+  // Try to place ships until all are legally placed
+}
+
+export function drawShipsLeft() {
+  const gameDiv = document.querySelector(".yourShips");
   human.gameboard.ships.forEach((ship) => {
     gameDiv.appendChild(_createShipDiv(ship));
   });
