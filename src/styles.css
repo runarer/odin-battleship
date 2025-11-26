@@ -15,7 +15,6 @@ body {
 .game {
   --gb-padding: 30px;
   --block-size: 75px;
-  position: relative;
   display: flex;
 }
 
@@ -39,6 +38,13 @@ body {
 .buttons > button:hover {
   background-color: #7abaf1;
 }
+
+.yourShips {
+  display: grid;
+  border: 1px solid black;
+  grid-template-columns: repeat(4, 75px);
+}
+
 .gameboard {
   display: grid;
   grid-template-columns: repeat(10, var(--block-size));
@@ -47,6 +53,7 @@ body {
   width: fit-content;
   background-image: url("./images/dark_water.jpg");
   padding: var(--gb-padding);
+  position: relative;
 }
 .board-square {
   border-bottom: 1px dashed black;
