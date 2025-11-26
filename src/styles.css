@@ -13,8 +13,8 @@ body {
 }
 .gameboard {
   display: grid;
-  grid-template-columns: repeat(10, 75px);
-  grid-template-rows: repeat(10, 75px);
+  grid-template-columns: repeat(10, var(--block-size));
+  grid-template-rows: repeat(10, var(--block-size));
   border: 1px solid black;
   width: fit-content;
   background-image: url("./images/dark_water.jpg");
