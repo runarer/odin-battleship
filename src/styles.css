@@ -70,8 +70,9 @@ body {
   border-right: none;
 }
 
-/* + 11 since there is a div for the ships. */
-.gameboard > .board-square:nth-last-child(-n + 11) {
+/* + 11 since there is a div for the ships. 
+   But that destroyed the next gameboard.*/
+.gameboard > .board-square:nth-last-child(-n + 10) {
   border-bottom: none;
 }
 
