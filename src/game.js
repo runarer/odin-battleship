@@ -82,32 +82,6 @@ export class Gameboard {
       }
     }
 
-    if (ship.length == 5) {
-      for (let i = 0; i < ship.length; i++) {
-        if (ship.direction === Direction.NORTH) {
-          shipPlacement[i + 5] = {
-            x: shipPlacement[i].x + 1,
-            y: shipPlacement[i].y,
-          };
-        } else if (ship.direction === Direction.EAST) {
-          shipPlacement[i + 5] = {
-            x: shipPlacement[i].x,
-            y: shipPlacement[i].y + 1,
-          };
-        } else if (ship.direction === Direction.SOUTH) {
-          shipPlacement[i + 5] = {
-            x: shipPlacement[i].x - 1,
-            y: shipPlacement[i].y,
-          };
-        } else if (ship.direction === Direction.WEST) {
-          shipPlacement[i + 5] = {
-            x: shipPlacement[i].x,
-            y: shipPlacement[i].y - 1,
-          };
-        }
-      }
-    }
-
     return shipPlacement;
   }
 

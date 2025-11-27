@@ -7,6 +7,8 @@ import {
   drawShipsBoard,
   drawShipsLeft,
   drawStartView,
+  hittest,
 } from "./view.js";
 
 drawStartView();
+hittest();

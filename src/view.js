@@ -4,6 +4,14 @@ import images from "./images";
 export const human = new Player("human");
 export const computer = new Player();
 
+export const hittest = () => {
+  human.gameboard.receiveAttack(5, 3);
+  human.gameboard.receiveAttack(5, 3);
+  human.gameboard.receiveAttack(5, 3);
+  human.gameboard.receiveAttack(5, 3);
+  human.gameboard.receiveAttack(5, 3);
+};
+
 export function initialPlacementOfShips() {
   try {
     human.gameboard.placeShip(new Ship(5, "Battleship", Direction.WEST), 5, 3);
@@ -25,6 +33,42 @@ export function initialPlacementOfShips() {
     human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.WEST), 3, 9);
     human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.NORTH), 9, 8);
     human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.EAST), 7, 9);
+
+    computer.gameboard.placeShip(
+      new Ship(5, "Battleship", Direction.WEST),
+      5,
+      3,
+    );
+
+    computer.gameboard.placeShip(
+      new Ship(3, "Destroyer", Direction.NORTH),
+      1,
+      3,
+    );
+    computer.gameboard.placeShip(
+      new Ship(3, "Destroyer", Direction.SOUTH),
+      1,
+      9,
+    );
+    computer.gameboard.placeShip(
+      new Ship(3, "Destroyer", Direction.EAST),
+      5,
+      0,
+    );
+
+    computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 3, 7);
+    computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 4, 5);
+    computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.SOUTH), 7, 8);
+
+    computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 0, 1);
+    computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.NORTH), 3, 2);
+    computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 6, 1);
+    computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.SOUTH), 8, 6);
+
+    computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.SOUTH), 2, 6);
+    computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.WEST), 3, 9);
+    computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.NORTH), 9, 8);
+    computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.EAST), 7, 9);
   } catch (err) {
     console.log(err);
   }
@@ -38,18 +82,27 @@ function _setTransformation(shipDiv, ship) {
   let left = padding;
 
   if (ship.direction === Direction.NORTH) {
+    if (ship.length > 3) {
+      left -= 37;
+    }
   } else if (ship.direction === Direction.EAST) {
     left += 75;
     degree = 90;
+    if (ship.length > 3) {
+      top -= 37;
+    }
   } else if (ship.direction === Direction.SOUTH) {
     degree = 180;
     left += 75;
     top += 75;
+    if (ship.length > 3) {
+      left += 37;
+    }
   } else if (ship.direction === Direction.WEST) {
     degree = 270;
     top += 75;
     if (ship.length > 3) {
-      top += 75;
+      top += 37;
     }
   }
   shipDiv.style.position = "absolute";
@@ -71,10 +124,8 @@ function _createShipDiv(ship) {
   }
 
   const shipImg = document.createElement("img");
-  shipImg.src = images.get(ship.type);
+  shipImg.src = images.get(`${ship.type}_${ship.length - ship.numberOfHits}`);
   shipDiv.appendChild(shipImg);
-
-  // _setTransformation(shipDiv, ship);
 
   return shipDiv;
 }
