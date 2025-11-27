@@ -3,6 +3,7 @@
 The Odin Project: Battleship
 
 Ship graphics created with tile set (https://opengameart.org/content/ships-with-ripple-effect), CC-BY 3.0.
+Explosion created with [Simple Explosion - Bleed's Game Art](https://opengameart.org/content/simple-explosion-bleeds-game-art)
 
 ## Notes
 
