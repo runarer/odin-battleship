@@ -4,6 +4,7 @@ The Odin Project: Battleship
 
 Ship graphics created with tile set (https://opengameart.org/content/ships-with-ripple-effect), CC-BY 3.0.
 Explosion created with [Simple Explosion - Bleed's Game Art](https://opengameart.org/content/simple-explosion-bleeds-game-art)
+Water splash created with [water splash](https://opengameart.org/content/water-splash)
 
 ## Notes
 
@@ -27,3 +28,6 @@ Krita:
 [Image Split](https://docs.krita.org/en/reference_manual/image_split.html)
 [Grids and Guides Docker](https://docs.krita.org/en/reference_manual/dockers/grids_and_guides.html)
 [How to make a gif in Krita](https://www.youtube.com/watch?v=hdE2XynyPf4)
+
+[ezgif](https://ezgif.com/)
+For removing loop, but now I need to reload the image.
