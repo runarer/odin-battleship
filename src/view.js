@@ -225,14 +225,14 @@ const _sendAttack = (div, x, y) => {
   const ship = computer.gameboard.receiveAttack(x, y);
   if (ship !== null) {
     // div.appendChild(_createclickedIcon(true));
-    div.textContent = "H";
+    div.textContent = String.fromCodePoint(0x1f525);
     div.classList.add("hit");
     if (ship.isSunk()) {
       div.appendChild(_createAndTransformShipDiv(ship));
     }
   } else {
     // div.appendChild(_createclickedIcon(false));
-    div.textContent = "M";
+    div.textContent = String.fromCodePoint(0x1f4a7);
     div.classList.add("missed");
   }
   console.log(ship);

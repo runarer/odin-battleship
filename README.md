@@ -33,4 +33,4 @@ Krita:
 For removing loop, but now I need to reload the image.
 
 Look into Canvas API animations and requestAnimationFrame. The gif approach seems messy.
-For now, mark each square with 'M' og 'H'
+For now, mark each square with :fire: og :droplet:, this needs `String.fromCodePoint(0x1f4a7)`
