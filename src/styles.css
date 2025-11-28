@@ -47,9 +47,6 @@ body {
   grid-template-rows: repeat(11, 75px);
   margin-right: 10px;
 }
-.yourShips > div {
-  /* border: 1px dashed black; */
-}
 
 .gameboard {
   display: grid;
@@ -95,4 +92,18 @@ div.mediumship {
 div.largeship {
   width: calc(2 * var(--block-size));
   height: calc(5 * var(--block-size));
+}
+
+div.clicked-square {
+  font-size: larger;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.hit {
+  color: red;
+}
+div.missed {
+  color: blue;
 }

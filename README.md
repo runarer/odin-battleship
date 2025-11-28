@@ -31,3 +31,6 @@ Krita:
 
 [ezgif](https://ezgif.com/)
 For removing loop, but now I need to reload the image.
+
+Look into Canvas API animations and requestAnimationFrame. The gif approach seems messy.
+For now, mark each square with 'M' og 'H'

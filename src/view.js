@@ -1,16 +1,14 @@
 import { Ship, Player, Gameboard, Direction } from "./game";
 import images from "./images";
 
+import explosion from "./images/explosion.gif";
+import splash from "./images/splash.gif";
+
+const animatedIcon = new Image();
+animatedIcon.id = "animatedIcon";
+
 export const human = new Player("human");
 export const computer = new Player();
-
-export const hittest = () => {
-  human.gameboard.receiveAttack(5, 3);
-  human.gameboard.receiveAttack(5, 3);
-  human.gameboard.receiveAttack(5, 3);
-  human.gameboard.receiveAttack(5, 3);
-  human.gameboard.receiveAttack(5, 3);
-};
 
 export function initialPlacementOfShips() {
   try {
@@ -202,11 +200,44 @@ function switchToGame() {
 function addEventListenersToBoard(gameboard) {
   for (let i = 0; i < 10; i++)
     for (let j = 0; j < 10; j++) {
-      gameboard.children[j + i * 10].addEventListener("click", () => {
-        console.log(i, j);
-      });
+      gameboard.children[j + i * 10].addEventListener(
+        "click",
+        (event) => {
+          _sendAttack(event.target, j, i);
+        },
+        { once: true },
+      );
     }
 }
+
+/**
+ Create the elements at startup, then add and remove it from the DOM.
+ */
+
+const _createclickedIcon = (hit) => {
+  // const icon = document.createElement("img");
+  if (hit) animatedIcon.src = explosion;
+  else animatedIcon.src = splash;
+  return animatedIcon;
+};
+
+const _sendAttack = (div, x, y) => {
+  const ship = computer.gameboard.receiveAttack(x, y);
+  if (ship !== null) {
+    // div.appendChild(_createclickedIcon(true));
+    div.textContent = "H";
+    div.classList.add("hit");
+    if (ship.isSunk()) {
+      div.appendChild(_createAndTransformShipDiv(ship));
+    }
+  } else {
+    // div.appendChild(_createclickedIcon(false));
+    div.textContent = "M";
+    div.classList.add("missed");
+  }
+  console.log(ship);
+  div.classList.add("clicked-square");
+};
 
 function randomizeShipPlacements() {
   // Remove ships

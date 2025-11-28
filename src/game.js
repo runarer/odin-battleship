@@ -17,7 +17,7 @@ export class Player {
 export class Ship {
   length;
   numberOfHits = 0;
-  sunk = false;
+  // sunk = false;
   type;
   direction;
   x;
@@ -121,6 +121,7 @@ export class Gameboard {
     } else {
       ship.hit();
     }
+    return ship;
   }
   allShipsSunken() {
     return this.ships.every((ship) => ship.isSunk());
