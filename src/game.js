@@ -8,7 +8,7 @@ export const Direction = {
 export class Player {
   type;
   gameboard;
-  constructor(type = "computer") {
+  constructor(type) {
     this.type = type;
     this.gameboard = new Gameboard();
   }
@@ -141,5 +141,77 @@ export class Gameboard {
           else throw err;
         }
     }
+  }
+}
+
+export class ComputerPlayer extends Player {
+  Discoveries = {
+    UNKNOWN: "U",
+    BOAT: "B",
+    WATER: "W",
+    SUNK: "S",
+  };
+  _opponentsMap = new Array(10)
+    .fill()
+    .map(() => Array(10).fill(this.Discoveries.UNKNOWN));
+  _opponent;
+
+  constructor(player) {
+    super("computer");
+    this._opponent = player;
+  }
+
+  _printOpponentMap() {
+    console.log("------------------------------------------------------");
+    for (let i = 0; i < this._opponentsMap.length; i++) {
+      console.log(this._opponentsMap[i]);
+    }
+  }
+
+  // Creates some random coordiantes. If already tried, get next in list,
+  // looping the end to front.
+  _newRandomMove() {
+    let line = Math.floor(Math.random() * 10);
+    let row = Math.floor(Math.random() * 10);
+    console.log(line, row);
+
+    while (this._opponentsMap[line][row] !== this.Discoveries.UNKNOWN) {
+      if (line === 9 && row === 9) {
+        line = 0;
+        row = 0;
+        continue;
+      }
+      if (row === 9) {
+        line++;
+        row = 0;
+        continue;
+      }
+      row++;
+    }
+    return { x: row, y: line };
+  }
+
+  makeMove(x, y) {
+    const boat = this._opponent.gameboard.receiveAttack(x, y);
+    if (boat !== null) {
+      if (boat.isSunk()) this._opponentsMap[y][x] = this.Discoveries.SUNK;
+      else this._opponentsMap[y][x] = this.Discoveries.BOAT;
+    } else {
+      this._opponentsMap[y][x] = this.Discoveries.WATER;
+    }
+  }
+
+  turn() {
+    // if (this._boatsFound.length > 0) {
+    //   const boat = this._boatsFound.at(-1);
+    //   if (this._opponent.gameboard.board[boat.y][boat.x].isSunk()) {
+    //     this._boatsFound.pop();
+    //     return this.turn();
+    //   }
+    // } else {
+    let move = this._newRandomMove();
+    this.makeMove(move.x, move.y);
+    this._printOpponentMap();
+    // }
   }
 }

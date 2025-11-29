@@ -1,4 +1,4 @@
-import { Ship, Player, Gameboard, Direction } from "./game";
+import { Ship, Player, ComputerPlayer, Direction } from "./game";
 import images from "./images";
 
 import explosion from "./images/explosion.gif";
@@ -8,7 +8,7 @@ const animatedIcon = new Image();
 animatedIcon.id = "animatedIcon";
 
 export const human = new Player("human");
-export const computer = new Player();
+export const computer = new ComputerPlayer(human);
 
 export function initialPlacementOfShips() {
   try {
@@ -210,6 +210,14 @@ function addEventListenersToBoard(gameboard) {
     }
 }
 
+const victory = () => {
+  console.log("Victory");
+};
+
+const defeat = () => {
+  console.log("Defeat");
+};
+
 /**
  Create the elements at startup, then add and remove it from the DOM.
  */
@@ -235,8 +243,18 @@ const _sendAttack = (div, x, y) => {
     div.textContent = String.fromCodePoint(0x1f4a7);
     div.classList.add("missed");
   }
-  console.log(ship);
+  //console.log(ship);
   div.classList.add("clicked-square");
+  if (computer.gameboard.allShipsSunken()) {
+    victory();
+    return;
+  }
+
+  computer.turn();
+  if (human.gameboard.allShipsSunken()) {
+    defeat();
+    return;
+  }
 };
 
 function randomizeShipPlacements() {
