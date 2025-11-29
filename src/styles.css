@@ -24,7 +24,7 @@ body {
   padding: 10px;
   justify-content: center;
 }
-.buttons > button {
+button {
   font-weight: 600;
   font-size: larger;
   margin: 10px;
@@ -35,7 +35,7 @@ body {
   background-color: #9dd2fa;
   color: #2274bb;
 }
-.buttons > button:hover {
+button:hover {
   background-color: #7abaf1;
 }
 
@@ -106,4 +106,21 @@ div.hit {
 }
 div.missed {
   color: blue;
+}
+
+.gameover {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  background-image: url("./images/dark_water.jpg");
+  width: calc(8 * var(--block-size));
+  height: calc(5 * var(--block-size));
+  align-items: center;
+  justify-content: center;
+}
+
+.restart-button {
+}
+
+.gameover-text {
 }

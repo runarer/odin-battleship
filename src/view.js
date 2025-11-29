@@ -7,8 +7,8 @@ import splash from "./images/splash.gif";
 const animatedIcon = new Image();
 animatedIcon.id = "animatedIcon";
 
-export const human = new Player("human");
-export const computer = new ComputerPlayer(human);
+export let human = new Player("human");
+export let computer = new ComputerPlayer(human);
 
 export function initialPlacementOfShips() {
   try {
@@ -210,12 +210,38 @@ function addEventListenersToBoard(gameboard) {
     }
 }
 
+const newGame = () => {
+  human = new Player();
+  computer = new ComputerPlayer(human);
+  drawStartView();
+};
+
+const gameOver = (text) => {
+  const gameOverView = document.createElement("div");
+  gameOverView.classList.add("gameover");
+
+  const h1 = document.createElement("h1");
+  h1.classList.add("gameover-text");
+  h1.textContent = text;
+  gameOverView.appendChild(h1);
+
+  const restart = document.createElement("button");
+  restart.type = "button";
+  restart.classList.add("restart-button");
+  restart.textContent = "Restart";
+  restart.addEventListener("click", newGame);
+  gameOverView.appendChild(restart);
+
+  const game = document.querySelector(".game");
+  game.replaceChildren(gameOverView);
+};
+
 const victory = () => {
-  console.log("Victory");
+  gameOver("Victory");
 };
 
 const defeat = () => {
-  console.log("Defeat");
+  gameOver("Defeat");
 };
 
 /**
@@ -261,6 +287,7 @@ function randomizeShipPlacements() {
   // Remove ships
   // Try to place ships until all are legally placed
   console.log("Not implemented yet");
+  victory();
 }
 
 /* Is there a way to do the placement with css?
