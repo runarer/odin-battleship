@@ -55,7 +55,7 @@ export class Gameboard {
   ];
   missed = [];
 
-  _getShipPlacement(ship, x, y) {
+  getShipPlacement(ship, x, y) {
     const shipPlacement = [{ x, y }];
 
     for (let i = 1; i < ship.length; i++) {
@@ -95,7 +95,7 @@ export class Gameboard {
   }
   placeShip(ship, x, y) {
     // Can ship be places?
-    const shipPlacement = this._getShipPlacement(ship, x, y);
+    const shipPlacement = this.getShipPlacement(ship, x, y);
     console.log(shipPlacement);
     try {
       this._canShipBePlaced(shipPlacement);
@@ -194,8 +194,16 @@ export class ComputerPlayer extends Player {
   makeMove(x, y) {
     const boat = this._opponent.gameboard.receiveAttack(x, y);
     if (boat !== null) {
-      if (boat.isSunk()) this._opponentsMap[y][x] = this.Discoveries.SUNK;
-      else this._opponentsMap[y][x] = this.Discoveries.BOAT;
+      if (boat.isSunk()) {
+        const sunkenBoat = this._opponent.gameboard.getShipPlacement(
+          boat,
+          boat.x,
+          boat.y,
+        );
+        sunkenBoat.forEach((square) => {
+          this._opponentsMap[square.y][square.x] = this.Discoveries.SUNK;
+        });
+      } else this._opponentsMap[y][x] = this.Discoveries.BOAT;
     } else {
       this._opponentsMap[y][x] = this.Discoveries.WATER;
     }

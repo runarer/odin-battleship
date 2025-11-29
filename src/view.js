@@ -10,7 +10,7 @@ animatedIcon.id = "animatedIcon";
 export let human = new Player("human");
 export let computer = new ComputerPlayer(human);
 
-export function initialPlacementOfShips() {
+export const initialPlacementOfShips = () => {
   try {
     human.gameboard.placeShip(new Ship(5, "Battleship", Direction.WEST), 5, 3);
 
@@ -70,9 +70,9 @@ export function initialPlacementOfShips() {
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-function _setTransformation(shipDiv, ship) {
+const _setTransformation = (shipDiv, ship) => {
   const padding = 30;
   let degree = 0; //Direction.NORTH
 
@@ -108,9 +108,9 @@ function _setTransformation(shipDiv, ship) {
   shipDiv.style.transformOrigin = "top left";
   shipDiv.style.top = top + ship.y * 75 + "px";
   shipDiv.style.left = left + ship.x * 75 + "px";
-}
+};
 
-function _createShipDiv(ship) {
+const _createShipDiv = (ship) => {
   const shipDiv = document.createElement("div");
   shipDiv.classList.add("ship");
   if (ship.length == 5) {
@@ -126,23 +126,23 @@ function _createShipDiv(ship) {
   shipDiv.appendChild(shipImg);
 
   return shipDiv;
-}
+};
 
-function _createAndTransformShipDiv(ship) {
+const _createAndTransformShipDiv = (ship) => {
   const shipDiv = _createShipDiv(ship);
 
   _setTransformation(shipDiv, ship);
 
   return shipDiv;
-}
+};
 
-export function drawShipsBoard() {
+export const drawShipsBoard = () => {
   const shipsDiv = document.createElement("div");
   human.gameboard.ships.forEach((ship) => {
     shipsDiv.appendChild(_createAndTransformShipDiv(ship));
   });
   return shipsDiv;
-}
+};
 
 const addButtons = () => {
   const startButton = document.createElement("button");
@@ -166,7 +166,7 @@ const addButtons = () => {
   return buttons;
 };
 
-export function drawStartView() {
+export const drawStartView = () => {
   const gameStartView = document.querySelector(".game");
   gameStartView.replaceChildren();
 
@@ -182,22 +182,24 @@ export function drawStartView() {
   initialPlacementOfShips();
   const shipsDiv = drawShipsBoard();
   gameboard.appendChild(shipsDiv);
-}
+};
 
 /* Switches to game view */
-function switchToGame() {
+const switchToGame = () => {
   const game = document.querySelector(".game");
   game.replaceChildren();
 
-  const yourShips = drawShipsLeft();
+  const yourShips = document.createElement("div");
+  yourShips.classList.add("yourShips");
   game.appendChild(yourShips);
+  drawShipsLeft();
 
   const gameboard = drawGameBoard();
   addEventListenersToBoard(gameboard);
   game.appendChild(gameboard);
-}
+};
 
-function addEventListenersToBoard(gameboard) {
+const addEventListenersToBoard = (gameboard) => {
   for (let i = 0; i < 10; i++)
     for (let j = 0; j < 10; j++) {
       gameboard.children[j + i * 10].addEventListener(
@@ -208,7 +210,7 @@ function addEventListenersToBoard(gameboard) {
         { once: true },
       );
     }
-}
+};
 
 const newGame = () => {
   human = new Player();
@@ -244,10 +246,6 @@ const defeat = () => {
   gameOver("Defeat");
 };
 
-/**
- Create the elements at startup, then add and remove it from the DOM.
- */
-
 const _createclickedIcon = (hit) => {
   // const icon = document.createElement("img");
   if (hit) animatedIcon.src = explosion;
@@ -269,7 +267,6 @@ const _sendAttack = (div, x, y) => {
     div.textContent = String.fromCodePoint(0x1f4a7);
     div.classList.add("missed");
   }
-  //console.log(ship);
   div.classList.add("clicked-square");
   if (computer.gameboard.allShipsSunken()) {
     victory();
@@ -281,20 +278,21 @@ const _sendAttack = (div, x, y) => {
     defeat();
     return;
   }
+  drawShipsLeft();
 };
 
-function randomizeShipPlacements() {
+const randomizeShipPlacements = () => {
   // Remove ships
   // Try to place ships until all are legally placed
   console.log("Not implemented yet");
   victory();
-}
+};
 
 /* Is there a way to do the placement with css?
    Placed based on class? */
-export function drawShipsLeft() {
-  const gameDiv = document.createElement("div");
-  gameDiv.classList.add("yourShips");
+const drawShipsLeft = () => {
+  const gameDiv = document.querySelector(".yourShips");
+  gameDiv.replaceChildren();
 
   const mediumShips = [
     "1/3/3/3",
@@ -332,8 +330,8 @@ export function drawShipsLeft() {
 
     gameDiv.appendChild(shipDiv);
   });
-  return gameDiv;
-}
+  // return gameDiv;
+};
 
 const drawGameBoard = () => {
   const gameboard = document.createElement("div");
