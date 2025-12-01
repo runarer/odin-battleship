@@ -3,8 +3,6 @@
 The Odin Project: Battleship
 
 Ship graphics created with tile set (https://opengameart.org/content/ships-with-ripple-effect), CC-BY 3.0.
-Explosion created with [Simple Explosion - Bleed's Game Art](https://opengameart.org/content/simple-explosion-bleeds-game-art)
-Water splash created with [water splash](https://opengameart.org/content/water-splash)
 
 ## Notes
 
@@ -23,6 +21,10 @@ This is for getting the html element that triggered or is handling an event:
 `event.target` or `event.currentTarget`. `currentTarget` gives the element that is currently handling the event.
 
 ### Working with images
+
+Not used:
+Explosion created with [Simple Explosion - Bleed's Game Art](https://opengameart.org/content/simple-explosion-bleeds-game-art)
+Water splash created with [water splash](https://opengameart.org/content/water-splash)
 
 Krita:
 [Image Split](https://docs.krita.org/en/reference_manual/image_split.html)
