@@ -17,7 +17,6 @@ export class Player {
 export class Ship {
   length;
   numberOfHits = 0;
-  // sunk = false;
   type;
   direction;
   x;
@@ -96,7 +95,7 @@ export class Gameboard {
   placeShip(ship, x, y) {
     // Can ship be places?
     const shipPlacement = this.getShipPlacement(ship, x, y);
-    console.log(shipPlacement);
+    // console.log(shipPlacement);
     try {
       this._canShipBePlaced(shipPlacement);
     } catch (err) {
@@ -142,6 +141,26 @@ export class Gameboard {
         }
     }
   }
+
+  _randomizeShipPos(length, direction) {
+    let x = Math.floor(Math.random() * this.board.length);
+    let y = Math.floor(Math.random() * this.board.length);
+    if (direction === Direction.NORTH)
+      y = Math.floor(Math.random() * (this.board.length - length + 1));
+    if (direction === Direction.SOUTH)
+      y =
+        Math.floor(Math.random() * (this.board.length - length + 1)) +
+        length -
+        1;
+    if (direction === Direction.EAST)
+      x =
+        Math.floor(Math.random() * (this.board.length - length + 1)) +
+        length -
+        1;
+    if (direction === Direction.WEST)
+      x = Math.floor(Math.random() * (this.board.length - length + 1));
+    return { x, y };
+  }
 }
 
 export class ComputerPlayer extends Player {
@@ -173,7 +192,7 @@ export class ComputerPlayer extends Player {
   _newRandomMove() {
     let line = Math.floor(Math.random() * 10);
     let row = Math.floor(Math.random() * 10);
-    console.log(line, row);
+    // console.log(line, row);
 
     while (this._opponentsMap[line][row] !== this.Discoveries.UNKNOWN) {
       if (line === 9 && row === 9) {

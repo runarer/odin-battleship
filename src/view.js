@@ -159,7 +159,7 @@ const addButtons = () => {
 
   const buttons = document.createElement("div");
   buttons.classList.add("buttons");
-  console.log(buttons);
+  // console.log(buttons);
   buttons.appendChild(randomizeButton);
   buttons.appendChild(startButton);
 
