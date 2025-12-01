@@ -1,8 +1,8 @@
 export const Direction = {
-  NORTH: "NORTH",
-  WEST: "WEST",
-  SOUTH: "SOUTH",
-  EAST: "EAST",
+  NORTH: 0,
+  EAST: 1,
+  SOUTH: 2,
+  WEST: 3,
 };
 
 export class Player {
@@ -209,17 +209,72 @@ export class ComputerPlayer extends Player {
     }
   }
 
+  _findFirstDiscoveredBoat() {
+    let boatFound = null;
+    for (let i = 0; i < this._opponentsMap.length; i++) {
+      for (let j = 0; j < this._opponentsMap[i].length; j++) {
+        if (this._opponentsMap[i][j] === "B") {
+          return { x: j, y: i };
+        }
+      }
+    }
+    return boatFound;
+  }
+
+  _newNonRandomMove(x, y) {
+    const dirV = [
+      { x: 0, y: -1 },
+      { x: 1, y: 0 },
+      { x: 0, y: 1 },
+      { x: -1, y: 0 },
+    ];
+    // let move = null;
+    let direction = Direction.NORTH;
+    // Due to the way _findFirstDiscoveredBoat work there will be no B above
+    // or to the left.
+    if (
+      x < this._opponentsMap[0].length - 1 &&
+      this._opponentsMap[y][x + 1] === "B"
+    ) {
+      direction = Direction.EAST;
+    }
+
+    while (this._opponentsMap[y][x] !== "U") {
+      // Do we need to change direction
+      const newX = x + dirV[direction].x;
+      const newY = y + dirV[direction].y;
+      if (
+        newX > 9 ||
+        newY > 9 ||
+        newX < 0 ||
+        newY < 0 ||
+        this._opponentsMap[newY][newX] === "S" ||
+        this._opponentsMap[newY][newX] === "W"
+      ) {
+        if (direction === Direction.NORTH) direction = Direction.SOUTH;
+        else if (direction === Direction.SOUTH) direction = Direction.EAST;
+        else if (direction === Direction.EAST) direction = Direction.WEST;
+        else direction = Direction.NORTH;
+        continue;
+      }
+
+      x += dirV[direction].x;
+      y += dirV[direction].y;
+    }
+
+    return { x, y };
+  }
+
   turn() {
-    // if (this._boatsFound.length > 0) {
-    //   const boat = this._boatsFound.at(-1);
-    //   if (this._opponent.gameboard.board[boat.y][boat.x].isSunk()) {
-    //     this._boatsFound.pop();
-    //     return this.turn();
-    //   }
-    // } else {
-    let move = this._newRandomMove();
+    let move = null;
+
+    const boatFound = this._findFirstDiscoveredBoat();
+    if (boatFound === null) {
+      move = this._newRandomMove();
+    } else {
+      move = this._newNonRandomMove(boatFound.x, boatFound.y);
+    }
     this.makeMove(move.x, move.y);
     this._printOpponentMap();
-    // }
   }
 }
