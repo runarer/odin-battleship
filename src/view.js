@@ -11,66 +11,71 @@ export let human = new Player("human");
 export let computer = new ComputerPlayer(human);
 
 export const initialPlacementOfShips = () => {
-  try {
-    human.gameboard.placeShip(new Ship(5, "Battleship", Direction.WEST), 5, 3);
-
-    human.gameboard.placeShip(new Ship(3, "Destroyer", Direction.NORTH), 1, 3);
-    human.gameboard.placeShip(new Ship(3, "Destroyer", Direction.SOUTH), 1, 9);
-    human.gameboard.placeShip(new Ship(3, "Destroyer", Direction.EAST), 5, 0);
-
-    human.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 3, 7);
-    human.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 4, 5);
-    human.gameboard.placeShip(new Ship(3, "Cruiser", Direction.SOUTH), 7, 8);
-
-    human.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 0, 1);
-    human.gameboard.placeShip(new Ship(2, "Gunboat", Direction.NORTH), 3, 2);
-    human.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 6, 1);
-    human.gameboard.placeShip(new Ship(2, "Gunboat", Direction.SOUTH), 8, 6);
-
-    human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.SOUTH), 2, 6);
-    human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.WEST), 3, 9);
-    human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.NORTH), 9, 8);
-    human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.EAST), 7, 9);
-
-    computer.gameboard.placeShip(
-      new Ship(5, "Battleship", Direction.WEST),
-      5,
-      3,
-    );
-
-    computer.gameboard.placeShip(
-      new Ship(3, "Destroyer", Direction.NORTH),
-      1,
-      3,
-    );
-    computer.gameboard.placeShip(
-      new Ship(3, "Destroyer", Direction.SOUTH),
-      1,
-      9,
-    );
-    computer.gameboard.placeShip(
-      new Ship(3, "Destroyer", Direction.EAST),
-      5,
-      0,
-    );
-
-    computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 3, 7);
-    computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 4, 5);
-    computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.SOUTH), 7, 8);
-
-    computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 0, 1);
-    computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.NORTH), 3, 2);
-    computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 6, 1);
-    computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.SOUTH), 8, 6);
-
-    computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.SOUTH), 2, 6);
-    computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.WEST), 3, 9);
-    computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.NORTH), 9, 8);
-    computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.EAST), 7, 9);
-  } catch (err) {
-    console.log(err);
-  }
+  human.gameboard.randomizeShips();
+  computer.gameboard.randomizeShips();
 };
+
+// export const initialPlacementOfShips = () => {
+//   try {
+//     human.gameboard.placeShip(new Ship(5, "Battleship", Direction.WEST), 5, 3);
+
+//     human.gameboard.placeShip(new Ship(3, "Destroyer", Direction.NORTH), 1, 3);
+//     human.gameboard.placeShip(new Ship(3, "Destroyer", Direction.SOUTH), 1, 9);
+//     human.gameboard.placeShip(new Ship(3, "Destroyer", Direction.EAST), 5, 0);
+
+//     human.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 3, 7);
+//     human.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 4, 5);
+//     human.gameboard.placeShip(new Ship(3, "Cruiser", Direction.SOUTH), 7, 8);
+
+//     human.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 0, 1);
+//     human.gameboard.placeShip(new Ship(2, "Gunboat", Direction.NORTH), 3, 2);
+//     human.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 6, 1);
+//     human.gameboard.placeShip(new Ship(2, "Gunboat", Direction.SOUTH), 8, 6);
+
+//     human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.SOUTH), 2, 6);
+//     human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.WEST), 3, 9);
+//     human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.NORTH), 9, 8);
+//     human.gameboard.placeShip(new Ship(2, "Sweeper", Direction.EAST), 7, 9);
+
+//     computer.gameboard.placeShip(
+//       new Ship(5, "Battleship", Direction.WEST),
+//       5,
+//       3,
+//     );
+
+//     computer.gameboard.placeShip(
+//       new Ship(3, "Destroyer", Direction.NORTH),
+//       1,
+//       3,
+//     );
+//     computer.gameboard.placeShip(
+//       new Ship(3, "Destroyer", Direction.SOUTH),
+//       1,
+//       9,
+//     );
+//     computer.gameboard.placeShip(
+//       new Ship(3, "Destroyer", Direction.EAST),
+//       5,
+//       0,
+//     );
+
+//     computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 3, 7);
+//     computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.WEST), 4, 5);
+//     computer.gameboard.placeShip(new Ship(3, "Cruiser", Direction.SOUTH), 7, 8);
+
+//     computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 0, 1);
+//     computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.NORTH), 3, 2);
+//     computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.WEST), 6, 1);
+//     computer.gameboard.placeShip(new Ship(2, "Gunboat", Direction.SOUTH), 8, 6);
+
+//     computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.SOUTH), 2, 6);
+//     computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.WEST), 3, 9);
+//     computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.NORTH), 9, 8);
+//     computer.gameboard.placeShip(new Ship(2, "Sweeper", Direction.EAST), 7, 9);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 const _setTransformation = (shipDiv, ship) => {
   const padding = 30;
@@ -282,10 +287,7 @@ const _sendAttack = (div, x, y) => {
 };
 
 const randomizeShipPlacements = () => {
-  // Remove ships
-  // Try to place ships until all are legally placed
-  console.log("Not implemented yet");
-  victory();
+  newGame();
 };
 
 /* Is there a way to do the placement with css?

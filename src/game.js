@@ -39,7 +39,24 @@ export class Ship {
 }
 
 export class Gameboard {
-  ships = [];
+  ships = [
+    new Ship(5, "Battleship", Direction.WEST),
+    new Ship(3, "Destroyer", Direction.NORTH),
+    new Ship(3, "Destroyer", Direction.SOUTH),
+    new Ship(3, "Destroyer", Direction.EAST),
+    new Ship(3, "Cruiser", Direction.WEST),
+    new Ship(3, "Cruiser", Direction.WEST),
+    new Ship(3, "Cruiser", Direction.SOUTH),
+    new Ship(2, "Gunboat", Direction.WEST),
+    new Ship(2, "Gunboat", Direction.NORTH),
+    new Ship(2, "Gunboat", Direction.WEST),
+    new Ship(2, "Gunboat", Direction.SOUTH),
+    new Ship(2, "Sweeper", Direction.SOUTH),
+    new Ship(2, "Sweeper", Direction.WEST),
+    new Ship(2, "Sweeper", Direction.NORTH),
+    new Ship(2, "Sweeper", Direction.EAST),
+  ];
+
   board = [
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
@@ -54,7 +71,9 @@ export class Gameboard {
   ];
   missed = [];
 
-  getShipPlacement(ship, x, y) {
+  getShipPlacement(ship) {
+    const x = ship.x;
+    const y = ship.y;
     const shipPlacement = [{ x, y }];
 
     for (let i = 1; i < ship.length; i++) {
@@ -80,6 +99,7 @@ export class Gameboard {
         };
       }
     }
+    console.log(shipPlacement);
 
     return shipPlacement;
   }
@@ -87,25 +107,29 @@ export class Gameboard {
   _canShipBePlaced(shipPlacement) {
     for (let coor of shipPlacement) {
       if (coor.x < 0 || coor.x > 9 || coor.y < 0 || coor.y > 9)
-        throw new Error("Outside gameboard");
+        // throw new Error("Outside gameboard");
+        return false;
       if (this.board[coor.y][coor.x] !== null)
-        throw new Error(`Collision with ${coor.x} ${coor.y}`);
+        // throw new Error(`Collision with ${coor.x} ${coor.y}`);
+        return false;
     }
+    return true;
   }
-  placeShip(ship, x, y) {
+  placeShip(ship) {
     // Can ship be places?
-    const shipPlacement = this.getShipPlacement(ship, x, y);
+    const shipPlacement = this.getShipPlacement(ship);
     // console.log(shipPlacement);
-    try {
-      this._canShipBePlaced(shipPlacement);
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    //   this._canShipBePlaced(shipPlacement);
+    // } catch (err) {
+    //   throw err;
+    // }
+    if (!this._canShipBePlaced(shipPlacement)) return false;
 
     // Place ship
-    this.ships.push(ship);
-    ship.x = x;
-    ship.y = y;
+    // this.ships.push(ship);
+    // ship.x = x;
+    // ship.y = y;
     for (let coor of shipPlacement) {
       this.board[coor.y][coor.x] = ship;
     }
@@ -160,6 +184,16 @@ export class Gameboard {
     if (direction === Direction.WEST)
       x = Math.floor(Math.random() * (this.board.length - length + 1));
     return { x, y };
+  }
+  randomizeShips() {
+    this.ships.forEach((ship) => {
+      do {
+        ship.direction = Math.floor(Math.random() * 4);
+        const { x, y } = this._randomizeShipPos(ship.length, ship.direction);
+        ship.x = x;
+        ship.y = y;
+      } while (!this.placeShip(ship));
+    });
   }
 }
 
