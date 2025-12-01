@@ -6,8 +6,6 @@ Ship graphics created with tile set (https://opengameart.org/content/ships-with-
 
 ## Notes
 
----
-
 ### One time click buttons:
 
 From Guugle
