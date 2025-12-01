@@ -18,26 +18,26 @@ const _setTransformation = (shipDiv, ship) => {
 
   if (ship.direction === Direction.NORTH) {
     if (ship.length > 3) {
-      left -= 37;
+      left -= 23;
     }
   } else if (ship.direction === Direction.EAST) {
     left += 75;
     degree = 90;
     if (ship.length > 3) {
-      top -= 37;
+      top -= 23;
     }
   } else if (ship.direction === Direction.SOUTH) {
     degree = 180;
     left += 75;
     top += 75;
     if (ship.length > 3) {
-      left += 37;
+      left += 23;
     }
   } else if (ship.direction === Direction.WEST) {
     degree = 270;
     top += 75;
     if (ship.length > 3) {
-      top += 37;
+      top += 23;
     }
   }
   shipDiv.style.position = "absolute";

@@ -106,30 +106,17 @@ export class Gameboard {
 
   _canShipBePlaced(shipPlacement) {
     for (let coor of shipPlacement) {
-      if (coor.x < 0 || coor.x > 9 || coor.y < 0 || coor.y > 9)
-        // throw new Error("Outside gameboard");
-        return false;
-      if (this.board[coor.y][coor.x] !== null)
-        // throw new Error(`Collision with ${coor.x} ${coor.y}`);
-        return false;
+      if (coor.x < 0 || coor.x > 9 || coor.y < 0 || coor.y > 9) return false;
+      if (this.board[coor.y][coor.x] !== null) return false;
     }
     return true;
   }
   placeShip(ship) {
     // Can ship be places?
     const shipPlacement = this.getShipPlacement(ship);
-    // console.log(shipPlacement);
-    // try {
-    //   this._canShipBePlaced(shipPlacement);
-    // } catch (err) {
-    //   throw err;
-    // }
+
     if (!this._canShipBePlaced(shipPlacement)) return false;
 
-    // Place ship
-    // this.ships.push(ship);
-    // ship.x = x;
-    // ship.y = y;
     for (let coor of shipPlacement) {
       this.board[coor.y][coor.x] = ship;
     }
@@ -226,7 +213,6 @@ export class ComputerPlayer extends Player {
   _newRandomMove() {
     let line = Math.floor(Math.random() * 10);
     let row = Math.floor(Math.random() * 10);
-    // console.log(line, row);
 
     while (this._opponentsMap[line][row] !== this.Discoveries.UNKNOWN) {
       if (line === 9 && row === 9) {
