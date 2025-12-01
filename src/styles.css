@@ -90,7 +90,8 @@ div.mediumship {
 }
 
 div.largeship {
-  width: calc(2 * var(--block-size));
+  /* width: calc(2 * var(--block-size)); */
+  width: 122px;
   height: calc(5 * var(--block-size));
 }
 
