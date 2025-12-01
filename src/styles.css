@@ -67,8 +67,6 @@ button:hover {
   border-right: none;
 }
 
-/* + 11 since there is a div for the ships. 
-   But that destroyed the next gameboard.*/
 .gameboard > .board-square:nth-last-child(-n + 10) {
   border-bottom: none;
 }
@@ -90,7 +88,6 @@ div.mediumship {
 }
 
 div.largeship {
-  /* width: calc(2 * var(--block-size)); */
   width: 122px;
   height: calc(5 * var(--block-size));
 }
